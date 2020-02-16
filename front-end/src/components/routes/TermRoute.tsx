@@ -46,10 +46,10 @@ interface Props extends RouteComponentProps<{ term: string }> {
 
 }
 
-const { API_URL = 'http://localhost:3050' } = process.env;
+const { REACT_APP_API_URL = 'http://localhost:3050' } = process.env;
 
-const TERM_URL = (term: string) => `${API_URL}/t/${term}`;
-const RANDOM_URL = () => `${API_URL}/r`;
+const TERM_URL = (term: string) => `${REACT_APP_API_URL}/t/${term}`;
+const RANDOM_URL = () => `${REACT_APP_API_URL}/r`;
 
 function TermRoute({ history, match }: Props) {
   const [data, setData] = useState();
