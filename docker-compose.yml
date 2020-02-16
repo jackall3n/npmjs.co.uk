@@ -30,6 +30,7 @@ services:
       - html:/usr/share/nginx/html
     environment:
       DEFAULT_EMAIL: hello@jackallen.me
+      NGINX_PROXY_CONTAINER: nginx-proxy
     networks:
       - proxy-network
 
