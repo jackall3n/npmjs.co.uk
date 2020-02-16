@@ -7,6 +7,10 @@ services:
     command: yarn start
     environment:
       PORT: 80
+      PUBLIC_URL: https://api.npmjs.co.uk
+      VIRTUAL_HOST: api.npmjs.co.uk
+      LETSENCRYPT_HOST: api.npmjs.co.uk
+      LETSENCRYPT_EMAIL: hello@jackallen.me
     expose:
       - 80
     networks:
