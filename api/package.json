@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev src/server"
+    "start": "ts-node-dev src/server",
+    "start:docker": "docker-compose up"
   },
   "dependencies": {
     "cors": "^2.8.5",

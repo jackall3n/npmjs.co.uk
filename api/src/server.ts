@@ -71,6 +71,8 @@ app.get('/r', (request: express.Request, response: express.Response) => {
   });
 });
 
-app.listen(3050, () => {
-  console.log('listening');
+const { PORT = 80 } = process.env;
+
+app.listen(PORT, () => {
+  console.log('listening at port:', PORT);
 });

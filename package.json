@@ -1,0 +1,9 @@
+{
+  "name": "npmjs",
+  "license": "MIT",
+  "scripts": {
+    "docker:proxy": "docker-compose up",
+    "docker:api": "yarn --cwd ./api start:docker",
+    "docker:npm": "yarn --cwd ./front-end start:docker"
+  }
+}

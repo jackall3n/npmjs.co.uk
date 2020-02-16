@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  npmjs-api:
+    container_name: npmjs-api
+    build: .
+    command: yarn start
+    environment:
+      PORT: 7000
+    ports:
+      - "7000:7000"
+    networks:
+      - cache-network
+
+networks:
+  cache-network:
+    external: true
+    name: cache-network
