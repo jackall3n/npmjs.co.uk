@@ -11,6 +11,7 @@ services:
       VIRTUAL_HOST: npmjs.co.uk
       LETSENCRYPT_HOST: npmjs.co.uk
       LETSENCRYPT_EMAIL: hello@jackallen.me
+      API_URL: https://api.npmjs.co.uk
     expose:
       - 80
     networks:
