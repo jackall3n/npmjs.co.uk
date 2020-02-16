@@ -1,0 +1,199 @@
+@mixin mobile() {
+  @media screen and (max-width: 1000px) {
+    @content;
+  }
+}
+
+.App {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+
+  @include mobile() {
+    // grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+  }
+
+  .Urban {
+    background-color: #1D2439;
+    font-family: "Lora", Georgia, Cambria, "Times New Roman", Times, serif;
+
+    .Tile-logo {
+      background-image: url("https://d2gatte9o95jao.cloudfront.net/assets/logo-1b439b7fa6572b659fbef161d8946372f472ef8e7169db1e47d21c91b410b918.svg");
+    }
+
+    &-content {
+      align-self: flex-start;
+
+      a {
+        text-decoration: underline;
+        font-weight: bold;
+        color: #134FE6;
+      }
+    }
+
+    &-word {
+      color: #134FE6;
+      font-size: 2rem;
+      font-weight: bold;
+      line-height: 129%;
+      text-decoration: none;
+      vertical-align: middle;
+    }
+
+    &-definition, &-example {
+      margin-top: 1em;
+      margin-bottom: 1em;
+      color: #2C353C;
+    }
+
+    &-example {
+      margin-bottom: 0.5rem;
+      font-style: italic;
+    }
+  }
+
+  .NPM {
+    background: #cb3837;
+
+    .Tile-logo {
+      background-image: url("https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg");
+    }
+
+    &-content {
+      font-family: 'Source Sans Pro', 'Lucida Grande', sans-serif;
+    }
+
+    &-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      padding-bottom: 0.2rem;
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      span {
+        font-size: 1rem;
+        padding-left: 0.3rem;
+
+      }
+    }
+
+    &-version {
+      font-family: "Fira Mono", "Andale Mono", "Consolas", monospace;
+      -ms-flex: none;
+      flex: none;
+      letter-spacing: 0;
+      padding-top: .5rem;
+      padding-bottom: .5rem;
+    }
+
+    &-notFound {
+      max-height: 300px;
+      background-image: url("https://static.npmjs.com/2f55441126e3c8d643c4c2d4e852cb4c.png");
+      min-height: 300px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
+.Tile {
+  display: grid;
+  align-items: center;
+  grid-template-rows: 30rem 1fr;
+  grid-template-columns: 1fr;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+  position: relative;
+  grid-gap: 2rem;
+
+  @media screen and (min-width: 1500px) {
+    padding: 8rem;
+  }
+
+  @media screen and (min-width: 1000px) {
+    grid-template-rows: 1fr 2fr;
+    padding: 2rem;
+  }
+
+  @include mobile() {
+    grid-template-rows: auto auto;
+    padding: 2rem;
+  }
+
+  &-logo {
+    background-repeat: no-repeat;
+    min-height: 100px;
+    min-width: 200px;
+    background-size: contain;
+    background-position: center;
+    // padding: 2rem 0;
+
+    @media screen and (min-width: 1700px) {
+      min-height: 200px;
+    }
+  }
+
+  &-content {
+    background: white;
+    padding: 1rem;
+    align-self: flex-start;
+    transition: transform .4s cubic-bezier(0.215, 0.61, 0.355, 1), opacity .4s cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translateY(-100px);
+    opacity: 0;
+
+    &.entering, &.entered {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    &.exiting, {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+
+    &.exited {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+  }
+
+  &-loading {
+    position: absolute;
+    transform: translate(-50%);
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transition: transform .4s cubic-bezier(0.215, 0.61, 0.355, 1), opacity .4s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+    &.entering, &.entered {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    &.exiting, {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+
+    &.exited {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+  }
+}
+
+.New-Button {
+  position: absolute;
+  top: 1rem;
+  color: white;
+  left: 1.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
