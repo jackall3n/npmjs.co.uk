@@ -8,6 +8,7 @@ import ClipLoader from "react-spinners/SyncLoader"
 import { Transition } from 'react-transition-group';
 import classnames from 'classnames';
 import FA from 'react-fontawesome';
+import environment from "../constants/environment";
 
 const override = css`
   display: block;
@@ -46,10 +47,10 @@ interface Props extends RouteComponentProps<{ term: string }> {
 
 }
 
-const { REACT_APP_API_URL = 'http://localhost:3050' } = process.env;
+const { api_url } = environment;
 
-const TERM_URL = (term: string) => `${REACT_APP_API_URL}/t/${term}`;
-const RANDOM_URL = () => `${REACT_APP_API_URL}/r`;
+const TERM_URL = (term: string) => `${api_url}/t/${term}`;
+const RANDOM_URL = () => `${api_url}/r`;
 
 function TermRoute({ history, match }: Props) {
   const [data, setData] = useState();
