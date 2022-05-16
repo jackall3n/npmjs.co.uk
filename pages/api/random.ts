@@ -1,6 +1,5 @@
 import urban from 'urban';
 import NPM from 'npm-api';
-import Cors from 'cors'
 import { getParsed } from "./search";
 
 const npm = new NPM();

@@ -43,14 +43,13 @@ export default function TermPage() {
     get(query.term as string).then();
   }, [query.term, isReady])
 
-
   return (
     <div className="grid grid-cols-1 flex-1 lg:grid-cols-2">
       <div className="absolute left-0 right-0 top-0 p-6 text-white">
         <div className="cursor-pointer flex">
           <div className={classnames("flex", { 'animate-spin': loading })}>
             <svg xmlns="http://www.w3.org/2000/svg"
-                 className={classnames("h-6 w-6")}
+                 className="h-6 w-6"
                  fill="none" viewBox="0 0 24 24"
                  style={{ transform: 'scale(1, -1)' }}
                  stroke="currentColor" onClick={() => get()}>
