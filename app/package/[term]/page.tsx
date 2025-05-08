@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import classnames from "classnames";
 import { AnimatePresence, motion } from "motion/react";
@@ -12,9 +12,16 @@ export default function TermPage() {
 
   const [{ urban, repo }, setData] = useState<any>({});
   const [loading, setLoading] = useState(true);
+  const termRef = useRef<string>(null);
 
   async function get(term?: string) {
     const url = term ? `/api/search?term=${term}` : "/api/random";
+
+    if (termRef.current === term) {
+      return;
+    }
+
+    termRef.current = term;
 
     setLoading(true);
 
@@ -25,12 +32,13 @@ export default function TermPage() {
       setData(data);
 
       if (term !== data.urban.parsed) {
-        push(`/package/${data.urban.parsed}`);
+        window.history.pushState(null, "", `/package/${data.urban.parsed}`);
       }
     } catch (e) {
       console.error(e);
     } finally {
       setLoading(false);
+      termRef.current = null;
     }
   }
 
@@ -69,9 +77,9 @@ export default function TermPage() {
         />
 
         <AnimatePresence initial={false}>
-          {urban && (
+          {!loading && (
             <motion.div
-              key={urban.word}
+              key={urban?.word}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -105,9 +113,9 @@ export default function TermPage() {
         />
 
         <AnimatePresence initial={false}>
-          {urban && (
+          {!loading && (
             <motion.div
-              key={urban.word}
+              key={urban?.word}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
