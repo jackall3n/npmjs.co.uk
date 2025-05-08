@@ -12,6 +12,7 @@
     "@types/react-transition-group": "^4.4.12",
     "classnames": "^2.5.1",
     "cors": "^2.8.5",
+    "lucide-react": "^0.508.0",
     "motion": "^12.10.4",
     "next": "^15.3.2",
     "npm-api": "^1.0.1",

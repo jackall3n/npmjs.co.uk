@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import classnames from "classnames";
 import { AnimatePresence, motion } from "motion/react";
+import { RefreshCw } from "lucide-react";
 
 export default function TermPage() {
   const { push } = useRouter();
@@ -43,28 +44,15 @@ export default function TermPage() {
 
   return (
     <div className="grid grid-cols-1 flex-1 lg:grid-cols-2">
-      <div className="absolute left-0 right-0 top-0 p-6 text-white">
-        <div className="cursor-pointer flex">
-          <div className={classnames("flex", { "animate-spin": loading })}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              style={{ transform: "scale(1, -1)" }}
-              stroke="currentColor"
-              onClick={() => get()}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
+      <RefreshCw
+        onClick={() => get()}
+        className={classnames(
+          "cursor-pointer text-white size-6 m-5 absolute z-10 top-0 left-0",
+          {
+            "animate-spin": loading,
+          },
+        )}
+      />
 
       <div className="bg-urban font-urban flex flex-col flex-1 p-10">
         <div
