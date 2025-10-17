@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import type { PropsWithChildren } from "react";
 
@@ -13,7 +14,10 @@ export default function Layout({ children }: PropsWithChildren) {
       <head>
         <link rel="shortcut icon" href="/favicon.png" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
