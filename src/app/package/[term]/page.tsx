@@ -25,7 +25,7 @@ export default function TermPage() {
 
   const [{ urban, npm }, setData] = useState<Result>({});
   const [loading, setLoading] = useState(true);
-  const termRef = useRef<string>(null);
+  const termRef = useRef<string | undefined | null>(null);
 
   async function get(term?: string) {
     const url = term ? `/api/search?term=${term}` : "/api/random";

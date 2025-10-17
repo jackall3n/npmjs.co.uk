@@ -1,15 +1,11 @@
-import NPM from "npm-api";
+import { getPackage } from "~/lib/npm";
 import { getTerm } from "~/lib/urban";
 
-const npm = new NPM();
-
-export async function get(term?: string) {
+export async function get(term?: string | null) {
   const urban = await getTerm(term);
 
-  const repo = npm.repo(urban.parsed);
-
   try {
-    const npm = await repo.package();
+    const npm = await getPackage(urban.parsed);
 
     return {
       npm,

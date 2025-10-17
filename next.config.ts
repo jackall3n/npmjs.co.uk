@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
-const config: NextConfig = {
-  serverExternalPackages: ["npm-api", "urban"],
+const nextConfig: NextConfig = {
+  /* config options here */
 };
 
-export default config;
+export default nextConfig;

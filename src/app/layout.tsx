@@ -2,21 +2,23 @@ import "../lib/orpc/server";
 
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
-import type { PropsWithChildren } from "react";
-
-import "./global.css";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "urban • npm",
 };
 
-export default function Layout({ children }: PropsWithChildren) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
       <head>
         <link rel="shortcut icon" href="/favicon.png" />
       </head>
-      <body>
+      <body className="antialiased">
         {children}
         <Analytics />
       </body>

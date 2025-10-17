@@ -11,7 +11,7 @@ export interface Term extends UrbanResponse {
   parsed: string;
 }
 
-export async function getTerm(term?: string) {
+export async function getTerm(term?: string | null) {
   return new Promise<Term>((resolve) => {
     const caller = term ? urban(term) : urban.random();
 
