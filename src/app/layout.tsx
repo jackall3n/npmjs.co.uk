@@ -1,3 +1,5 @@
+import "../lib/orpc/server";
+
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import type { PropsWithChildren } from "react";

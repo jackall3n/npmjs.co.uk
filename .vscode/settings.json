@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["bunx", "tabler", "turbopack"],
+  "cSpell.words": ["bunx", "orpc", "tabler", "turbopack"],
   "editor.codeActionsOnSave": {
     "source.organizeImports.biome": "explicit",
     "source.fixAll.biome": "explicit"
