@@ -1,7 +1,7 @@
-import { type PropsWithChildren } from "react";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
+import type { PropsWithChildren } from "react";
 
-import "../styles/global.css";
+import "./global.css";
 
 export const metadata: Metadata = {
   title: "urban • npm",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <html>
+    <html lang="en">
       <head>
         <link rel="shortcut icon" href="/favicon.png" />
       </head>

@@ -1,46 +1,26 @@
 import NPM from "npm-api";
-import urban from "urban";
-import removeAccents from "remove-accents";
+import { getTerm } from "~/lib/urban";
 
 const npm = new NPM();
 
-export const getParsed = (term: string) =>
-  removeAccents(term.trim())
-    .toLowerCase()
-    .replace(/[^0-9a-z- ]/gm, "")
-    .replace(/[ ]/gm, "-");
+export async function get(term?: string) {
+  const urban = await getTerm(term);
 
-export const get = async (term?: string) => {
-  return new Promise((resolve, reject) => {
-    const caller = term ? urban(term) : urban.random();
+  const repo = npm.repo(urban.parsed);
 
-    caller.first((json: any) => {
-      const parsed_word = getParsed(json.word);
-      const repo = npm.repo(parsed_word);
+  try {
+    const npm = await repo.package();
 
-      const result = {
-        urban: {
-          parsed: parsed_word,
-          ...json,
-        },
-        repo: {},
-      };
+    return {
+      npm,
+      urban,
+    };
+  } catch (error) {
+    console.error(error);
 
-      console.log(json.word, parsed_word, repo);
-
-      repo
-        .package()
-        .then((repo) => {
-          resolve({
-            ...result,
-            repo,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-
-          resolve(result);
-        });
-    });
-  });
-};
+    return {
+      npm: {},
+      urban,
+    };
+  }
+}

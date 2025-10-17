@@ -1,16 +1,29 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import classnames from "classnames";
+import { IconExternalLink } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "motion/react";
-import { RefreshCw } from "lucide-react";
+import { useParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { RefreshButton } from "~/components/refresh-button";
+import { cn } from "~/lib/utils";
+
+interface Result {
+  urban?: {
+    parsed: string;
+    word: string;
+    definition: string;
+    example: string;
+  };
+  npm?: {
+    version: string;
+    description: string;
+  };
+}
 
 export default function TermPage() {
-  const { push } = useRouter();
   const { term } = useParams<{ term?: string }>();
 
-  const [{ urban, repo }, setData] = useState<any>({});
+  const [{ urban, npm }, setData] = useState<Result>({});
   const [loading, setLoading] = useState(true);
   const termRef = useRef<string>(null);
 
@@ -42,6 +55,7 @@ export default function TermPage() {
     }
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: no need
   useEffect(() => {
     if (urban && term === urban.parsed) {
       return;
@@ -52,15 +66,7 @@ export default function TermPage() {
 
   return (
     <div className="grid grid-cols-1 flex-1 lg:grid-cols-2">
-      <RefreshCw
-        onClick={() => get()}
-        className={classnames(
-          "cursor-pointer text-white size-6 m-5 absolute z-10 top-0 left-0",
-          {
-            "animate-spin": loading,
-          },
-        )}
-      />
+      <RefreshButton onClick={() => get()} className="absolute top-5 left-5" />
 
       <div className="bg-urban font-urban flex flex-col flex-1 p-10">
         <div
@@ -83,7 +89,7 @@ export default function TermPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className={classnames("bg-white p-4 mt-10")}
+              className={cn("bg-white p-4 mt-10")}
             >
               <div className="font-bold text-3xl" style={{ color: "#134FE6" }}>
                 {urban?.word}
@@ -102,8 +108,7 @@ export default function TermPage() {
         <div
           className="mt-5"
           style={{
-            backgroundImage:
-              "url(https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg)",
+            backgroundImage: "url(https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg)",
             minHeight: 200,
             minWidth: 200,
             backgroundSize: "contain",
@@ -119,7 +124,7 @@ export default function TermPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className={classnames("bg-white p-4 mt-10")}
+              className={cn("bg-white p-4 mt-10")}
             >
               <a
                 target="_blank"
@@ -127,41 +132,25 @@ export default function TermPage() {
                 href={`https://www.npmjs.com/package/${urban?.parsed}`}
                 className="flex items-center"
               >
-                <span className="mr-1 font-semibold text-2xl">
-                  {urban?.parsed}
-                </span>
+                <span className="mr-1 font-semibold text-2xl">{urban?.parsed}</span>
 
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                  />
-                </svg>
+                <IconExternalLink className="size-5 ml-1" />
               </a>
 
-              {repo?.version && (
+              {npm?.version && (
                 <>
                   <div
                     style={{
-                      fontFamily:
-                        '"Fira Mono", "Andale Mono", "Consolas", monospace',
+                      fontFamily: '"Fira Mono", "Andale Mono", "Consolas", monospace',
                     }}
                     className="mt-2"
                   >
-                    {repo?.version}
+                    {npm?.version}
                   </div>
-                  <div className="mt-2">{repo?.description}</div>
+                  <div className="mt-2">{npm?.description}</div>
                 </>
               )}
-              {!repo?.version && (
+              {!npm?.version && (
                 <div
                   style={{
                     backgroundImage: "url(/404.png)",
@@ -182,10 +171,11 @@ export default function TermPage() {
 
 function UrbanText({ text }: { text?: string }) {
   const parsed = useMemo(() => {
-    return (text as string)?.replace(/\[([^\]]+)]/gm, (match, token) => {
+    return (text as string)?.replace(/\[([^\]]+)]/gm, (_, token) => {
       return `<a target="_blank" rel="noopener noreferrer" class="text-blue-600 underline" href="https://www.urbandictionary.com/define.php?term=${encodeURIComponent(token)}">${token}</a>`;
     });
   }, [text]);
 
+  // biome-ignore lint/security/noDangerouslySetInnerHtml: will replace
   return <span dangerouslySetInnerHTML={{ __html: parsed }} />;
 }
